@@ -3,24 +3,24 @@ pipeline {
     stages {
         stage('git repo & clean') {
             steps {
-               bat "rmdir  /s /q TicketBookingServiceJunitTesting"
-                bat "git clone https://github.com/kishancs2020/TicketBookingServiceJunitTesting.git"
-                bat "mvn clean -f TicketBookingServiceJunitTesting"
+               sh "rm -rf TicketBookingServiceJunitTesting"
+                sh "git clone https://github.com/kishancs2020/TicketBookingServiceJunitTesting.git"
+                sh "mvn validate -f TicketBookingServiceJunitTesting"
             }
         }
-        stage('install') {
+        stage('validate') {
             steps {
-                bat "mvn install -f TicketBookingServiceJunitTesting"
+                sh "mvn validate"
             }
         }
-        stage('test') {
+        stage('complie') {
             steps {
-                bat "mvn test -f TicketBookingServiceJunitTesting"
+                sh "mvn compile"
             }
         }
-        stage('package') {
+        stage('clean') {
             steps {
-                bat "mvn package -f TicketBookingServiceJunitTesting"
+                sh "mvn clean"
             }
         }
     }
